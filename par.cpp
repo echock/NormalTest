@@ -16,6 +16,8 @@ void Print(Type *ar,int n)
 /*
 将给定数组按照快排的思想排序，返回分界线的位置
 分界线之前的都比这个数字小，之后的都比它大
+这里需要注意的一点是，这种方法并没有对原数组进行排序
+仅仅是将传递过来的数组的首元素作为一个tag，tag前的数组是没有顺序的
 */
 template<class Type>
 int Partition(Type*ar,int left,int right)
@@ -39,7 +41,10 @@ int Partition(Type*ar,int left,int right)
 	return i;
 }
 
-//寻找第k大的数字的两种方法，道理是一样的
+/*寻找第k大的数字的两种方法，
+将数组分割后，如果说分割的tag正好是第k个元素，直接返回
+否则，同样方法，左右递归，不过缩小查找范围而已
+*/
 template<class Type>
 const Type & SelectK1(Type *ar,int left,int right,int k)
 {
