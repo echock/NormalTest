@@ -109,6 +109,66 @@ BtNode * CreateTree6(char ** const str)
 	}
 	return s;
 }
+struct StkNode
+{
+	BtNode *pnode;
+	int     popnum;
+public:
+	StkNode(BtNode *p=NULL):pnode(p),popnum(0) {}
+};
+
+void NicePastOrder2(BtNode *ptr)
+{
+	if(ptr == NULL) return ;
+	stack<StkNode> st;
+	st.push(StkNode(ptr));
+	while(!st.empty())
+	{
+		StkNode node = st.top(); st.pop();
+		if(++node.popnum == 3)
+		{
+			cout<<node.pnode->data<<" ";
+		}else
+		{
+			st.push(node);
+			if(node.popnum == 1 && node.pnode->leftchild != NULL)
+			{
+				st.push(StkNode(node.pnode->leftchild));
+			}else if(node.popnum == 2 && node.pnode->rightchild != NULL)
+			{
+				st.push(StkNode(node.pnode->rightchild));
+			}
+		}
+	}
+	cout<<endl;
+}
+
+void NiceInOrder2(BtNode *ptr)
+{
+	if(ptr == NULL) return ;
+	stack<StkNode> st;
+	st.push(StkNode(ptr));
+	while(!st.empty())
+	{
+		StkNode node = st.top(); st.pop();
+		if(++node.popnum == 2)
+		{
+			cout<<node.pnode->data<<" ";
+			if(node.pnode->rightchild != NULL)
+			{
+				st.push(StkNode(node.pnode->rightchild));
+			}
+		}else
+		{
+			st.push(node);
+			if(node.popnum == 1 && node.pnode->leftchild != NULL)
+			{
+				st.push(StkNode(node.pnode->leftchild));
+			}
+		}
+	}
+	cout<<endl;
+}
 void PreOrder(BtNode *s)
 {
 	if(s!=NULL)
@@ -262,7 +322,7 @@ BtNode *FindParent(BtNode *ptr,BtNode*root)
 	return	Findp(ptr,root);
 }
 
-//¶þ²æÊ÷Éî¶È
+//Â¶Ã¾Â²Ã¦ÃŠÃ·Ã‰Ã®Â¶Ãˆ
 int Depth(BtNode*ptr)
 {
 	if(ptr==NULL)
